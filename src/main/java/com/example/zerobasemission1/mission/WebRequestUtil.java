@@ -13,7 +13,7 @@ public class WebRequestUtil {
         OkHttpClient client = new OkHttpClient();
         String apiKey = Config.API_KEY;
 
-        String url = "http://openapi.seoul.go.kr:8088/"+apiKey+"/json/TbPublicWifiInfo/1/2";
+        String url = "http://openapi.seoul.go.kr:8088/"+apiKey+"/json/TbPublicWifiInfo/2/3";
         Request request = new Request.Builder()
                 .url(url)
                 .build();
