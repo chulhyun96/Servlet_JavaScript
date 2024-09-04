@@ -11,7 +11,7 @@
     <title>와이파이 정보 구하기</title>
 </head>
 <body>
-<h1>안녕</h1>
-    <h1><%request.getAttribute("result");%></h1>
+    <h1><%=request.getAttribute("result")%></h1>
+    <a href="index.jsp">홈으로 가기</a>
 </body>
 </html>

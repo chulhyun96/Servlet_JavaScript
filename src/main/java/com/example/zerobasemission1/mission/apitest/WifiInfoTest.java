@@ -30,14 +30,18 @@ public class WifiInfoTest {
             JsonObject tbPublicWifiInfo = json.get("TbPublicWifiInfo").getAsJsonObject();
 
             int totalCount = tbPublicWifiInfo.get("list_total_count").getAsInt();
+            JsonArray jsonArr = tbPublicWifiInfo.get("row").getAsJsonArray();
 
-            JsonArray rows = tbPublicWifiInfo.getAsJsonArray("row");
-            rows.forEach(row -> {
-                JsonObject rowElement = row.getAsJsonObject();
-                rowElement.entrySet().forEach(entry -> {
-                    System.out.println(entry.getKey() + " : " + entry.getValue());
-                });
-            });
+            System.out.println(jsonArr.size());
+            for (int i = 0; i < jsonArr.size(); i++) {
+                JsonObject asJsonObject = jsonArr.get(i).getAsJsonObject();
+                String xSwifiMgrNo = asJsonObject.get("X_SWIFI_MGR_NO").getAsString();
+                System.out.println("xSwifiMgrNo = " + xSwifiMgrNo);
+                String xSwifiWrdofc = asJsonObject.get("X_SWIFI_WRDOFC").getAsString();
+                System.out.println("xSwifiWrdofc = " + xSwifiWrdofc);
+                String xSwifiMainNm = asJsonObject.get("X_SWIFI_MAIN_NM").getAsString();
+                System.out.println("xSwifiMainNm = " + xSwifiMainNm);
+            }
 
             System.out.println("============TOTAL COUNT============");
             System.out.println("TOTAL Count = " +totalCount);
