@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/load-wifi.jsp")
+@WebServlet("/load-wifi")
 public class WifiInfoServlet extends HttpServlet {
     private final WifiInfoRepository wifiInfoRepository = new WifiInfoRepository();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int saveCount = wifiInfoRepository.loadData();
-        String result = saveCount + "개의 WIFI 정보를 정상적으로 저장하였습니다";
+        int loadDataCount = wifiInfoRepository.loadData();
+        String result = loadDataCount + "개의 WIFI 정보를 정상적으로 저장하였습니다";
         req.setAttribute("result", result);
         req.getRequestDispatcher("load-wifi-view.jsp").forward(req, resp);
     }
