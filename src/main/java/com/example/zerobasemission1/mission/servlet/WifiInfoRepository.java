@@ -10,6 +10,8 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WifiInfoRepository {
@@ -33,6 +35,7 @@ public class WifiInfoRepository {
     public int loadData() {
         JsonObject wifiJson = getWifiJsonObject();
         JsonObject publicWifiInfoJson = wifiJson.get("TbPublicWifiInfo").getAsJsonObject();
+        /*saveToDatabase(publicWifiInfoJson);*/
         return publicWifiInfoJson.get("list_total_count").getAsInt();
     }
 
@@ -43,7 +46,7 @@ public class WifiInfoRepository {
                 .readTimeout(30,TimeUnit.SECONDS)
                 .build();
 
-        String urlBuilder = BASE_URL + Config.API_KEY + "/json/TbPublicWifiInfo/" + 18859 + "/" + 19858;
+        String urlBuilder = BASE_URL + Config.API_KEY + "/json/TbPublicWifiInfo/" + 25859 + "/" + 26567;
         Request request = new Request.Builder().url(urlBuilder).build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -82,8 +85,10 @@ public class WifiInfoRepository {
                 pstmt.setString(11, jsonObject.get("X_SWIFI_CNSTC_YEAR").getAsString());
                 pstmt.setString(12, jsonObject.get("X_SWIFI_INOUT_DOOR").getAsString());
                 pstmt.setString(13, jsonObject.get("X_SWIFI_REMARS3").getAsString());
-                pstmt.setString(14, jsonObject.get("LAT").getAsString());
-                pstmt.setString(15, jsonObject.get("LNT").getAsString());
+
+                pstmt.setDouble(14, jsonObject.get("LAT").getAsDouble());
+                pstmt.setDouble(15, jsonObject.get("LNT").getAsDouble());
+
                 pstmt.setString(16, jsonObject.get("WORK_DTTM").getAsString());
                 pstmt.addBatch();
             }
@@ -92,6 +97,50 @@ public class WifiInfoRepository {
             e.printStackTrace();
             throw new RuntimeException("오류");
         }
+    }
+
+    public List<WifiInfo> getSearchList(double lat, double lnt) {
+        String sql = "SELECT *, " +
+                "(6371 * ACOS(COS(RADIANS(?)) * COS(RADIANS(LAT)) * COS(RADIANS(LNT) - RADIANS(?)) + " +
+                "SIN(RADIANS(?)) * SIN(RADIANS(LAT)))) AS distance " +
+                "FROM PublicWifiInfo " +
+                "HAVING distance <= 5 " +
+                "ORDER BY distance " +
+                "LIMIT 20";
+        List<WifiInfo> list = new ArrayList<>();
+
+        try  {
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setDouble(1, lat); // 사용자의 위도
+            pstmt.setDouble(2, lnt); // 사용자의 경도
+            pstmt.setDouble(3, lat); // 사용자의 위도 (거리 계산을 위한 값)
+
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                WifiInfo wifiInfo = new WifiInfo();
+                wifiInfo.setId(rs.getString("X_SWIFI_MGR_NO"));
+                wifiInfo.setWrdofc(rs.getString("X_SWIFI_WRDOFC"));
+                wifiInfo.setNm(rs.getString("X_SWIFI_MAIN_NM"));
+                wifiInfo.setAddress1(rs.getString("X_SWIFI_ADRES1"));
+                wifiInfo.setAddress2(rs.getString("X_SWIFI_ADRES2"));
+                wifiInfo.setFloor(rs.getString("X_SWIFI_INSTL_FLOOR"));
+                wifiInfo.setTy(rs.getString("X_SWIFI_INSTL_TY"));
+                wifiInfo.setMby(rs.getString("X_SWIFI_INSTL_MBY"));
+                wifiInfo.setSe(rs.getString("X_SWIFI_SVC_SE"));
+                wifiInfo.setCmcwr(rs.getString("X_SWIFI_CMCWR"));
+                wifiInfo.setYear(rs.getString("X_SWIFI_CNSTC_YEAR"));
+                wifiInfo.setDoor(rs.getString("X_SWIFI_INOUT_DOOR"));
+                wifiInfo.setRemars3(rs.getString("X_SWIFI_REMARS3"));
+                wifiInfo.setLat(rs.getDouble("LAT"));
+                wifiInfo.setLnt(rs.getDouble("LNT"));
+                wifiInfo.setDttm(rs.getString("WORK_DTTM"));
+                list.add(wifiInfo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 }
 
