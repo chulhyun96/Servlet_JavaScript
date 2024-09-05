@@ -1,5 +1,8 @@
 package com.example.zerobasemission1.mission.servlet;
 
+
+import java.text.DecimalFormat;
+
 public class WifiInfo {
     private String id;
     private String wrdofc;
@@ -16,12 +19,15 @@ public class WifiInfo {
     private String remars3;
     private Double lat;
     private Double lnt;
+    private Double distance;
     private String dttm;
+    private DecimalFormat df = new DecimalFormat("#.####");
+
 
     public WifiInfo() {
     }
 
-    public WifiInfo(String id, String wrdofc, String nm, String address1, String address2, String floor, String ty, String mby, String se, String cmcwr, String year, String door, String remars3, Double lat, Double lnt, String dttm) {
+    public WifiInfo(String id, String wrdofc, String nm, String address1, String address2, String floor, String ty, String mby, String se, String cmcwr, String year, String door, String remars3, Double lat, Double lnt, Double distance, String dttm) {
         this.id = id;
         this.wrdofc = wrdofc;
         this.nm = nm;
@@ -37,7 +43,16 @@ public class WifiInfo {
         this.remars3 = remars3;
         this.lat = lat;
         this.lnt = lnt;
+        this.distance = distance;
         this.dttm = dttm;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Double distance) {
+        this.distance = Double.valueOf(df.format(distance));
     }
 
     public String getId() {

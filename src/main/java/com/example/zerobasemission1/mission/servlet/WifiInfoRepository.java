@@ -135,6 +135,7 @@ public class WifiInfoRepository {
                 wifiInfo.setLat(rs.getDouble("LAT"));
                 wifiInfo.setLnt(rs.getDouble("LNT"));
                 wifiInfo.setDttm(rs.getString("WORK_DTTM"));
+                wifiInfo.setDistance(rs.getDouble("distance"));
                 list.add(wifiInfo);
             }
         } catch (SQLException e) {

@@ -44,14 +44,14 @@ h1 {
     margin: 0 5px;
 }
 
-.location-inputs button {
+/*.location-inputs button {
     padding: 5px 15px;
     margin: 0 5px;
     background-color: #007BFF;
     color: #fff;
     border: none;
     cursor: pointer;
-}
+}*/
 
 .location-inputs button:hover {
     background-color: #0056b3;
@@ -60,7 +60,7 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 table, th, td {

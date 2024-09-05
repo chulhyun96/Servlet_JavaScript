@@ -15,10 +15,22 @@ public class WifiInfoSearch extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //37.4811992, 126.8955428
         double lat = Double.parseDouble(request.getParameter("lat"));
-        System.out.println("lat = " + lat);
         double lnt = Double.parseDouble(request.getParameter("lnt"));
-        System.out.println("lnt = " + lnt);
         List<WifiInfo> searchList = wifiInfoRepository.getSearchList(lat, lnt);
+
+        System.out.println("lat = " + lat);
+        System.out.println("lnt = " + lnt);
         System.out.println("searchList = " + searchList.size());
+
+        request.setAttribute("lat",lat);
+        request.setAttribute("lnt",lnt);
+        if (searchList.size() == 0) {
+            String notService = "서비스 가능한 지역이 아닙니다.";
+            request.setAttribute("notService",notService);
+            request.getRequestDispatcher("not-service-wifi.jsp").forward(request, response);
+        }  else {
+            request.setAttribute("searchList", searchList);
+            request.getRequestDispatcher("success-load-data.jsp").forward(request, response);
+        }
     }
 }
