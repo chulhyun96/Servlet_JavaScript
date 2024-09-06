@@ -46,6 +46,9 @@ public class WifiInfo {
         this.distance = distance;
         this.dttm = dttm;
     }
+    public boolean isEmpty() {
+        return this.id.isEmpty();
+    }
 
     public Double getDistance() {
         return distance;

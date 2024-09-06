@@ -12,7 +12,8 @@
 <div class="container">
     <h1>와이파이 정보 구하기</h1>
     <div class="menu">
-        <a href="#">위치 히스토리 목록</a> |
+        <a href="index.jsp">홈</a> |
+        <a href="my-history">위치 히스토리 목록</a> |
         <a href="load-wifi">Open API 와이파이 정보 가져오기</a> |
         <a href="#">즐겨 찾기 보기</a> |
         <a href="#">즐겨 찾기 그룹 관리</a>
@@ -49,11 +50,13 @@
             </thead>
             <tbody>
             <tr>
-                <td colspan="17">위치 정보를 입력한 후에 조회해 주세요.</td>
+                <td colspan="17"> <b>위치 정보를 입력한 후에 조회해 주세요</b>.</td>
             </tr>
             </tbody>
         </table>
     </div>
 <script src="static/mylocation.js"></script>
+<script src="static/myhistory.js"></script>
+
 </body>
 </html>

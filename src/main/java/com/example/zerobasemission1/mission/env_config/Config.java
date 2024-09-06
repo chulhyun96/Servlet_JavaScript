@@ -8,5 +8,4 @@ public abstract class Config {
     public static final String DB_USER = dotenv.get("DB_USER");
     public static final String DB_PASSWORD = dotenv.get("DB_PASSWORD");
     public static final String API_KEY = dotenv.get("API_KEY");
-
 }

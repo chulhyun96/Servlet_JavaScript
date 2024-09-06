@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.example.zerobasemission1.mission.servlet.Member" %><%--
   Created by IntelliJ IDEA.
   User: cheolhyeon
   Date: 2024. 9. 6.
@@ -19,7 +19,8 @@
 <div class="container">
     <h1>와이파이 정보 구하기</h1>
     <div class="menu">
-        <a href="#">위치 히스토리 목록</a> |
+        <a href="index.jsp">홈</a> |
+        <a href="my-history">위치 히스토리 목록</a> |
         <a href="load-wifi">Open API 와이파이 정보 가져오기</a> |
         <a href="#">즐겨 찾기 보기</a> |
         <a href="#">즐겨 찾기 그룹 관리</a>
@@ -58,12 +59,16 @@
             <th>작업일자</th>
         </tr>
         </thead>
+        <tbody>
         <c:forEach var="wifi" items="${searchList}">
             <tr>
                 <td>${wifi.distance}</td>
                 <td>${wifi.id}</td>
                 <td>${wifi.wrdofc}</td>
-                <td>${wifi.nm}</td>
+                <td>
+                    <a href="detail?mgrNo=${wifi.id}" <%--onclick="insertData('<%=member.getId()%>')"--%>>${wifi.nm}</a>
+                </td>
+
                 <td>${wifi.address1}</td>
                 <td>${wifi.address2}</td>
                 <td>${wifi.floor}</td>
@@ -79,8 +84,10 @@
                 <td>${wifi.dttm}</td>
             </tr>
         </c:forEach>
+        </tbody>
     </table>
 </div>
 </body>
 <script src="static/mylocation.js"></script>
+<script src="static/myhistory.js"></script>
 </html>

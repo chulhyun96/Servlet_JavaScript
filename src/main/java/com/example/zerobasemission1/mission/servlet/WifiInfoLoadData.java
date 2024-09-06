@@ -9,7 +9,7 @@ import java.io.IOException;
 
 
 @WebServlet("/load-wifi")
-public class WifiInfoServlet extends HttpServlet {
+public class WifiInfoLoadData extends HttpServlet {
     private final WifiInfoRepository wifiInfoRepository = new WifiInfoRepository();
 
     @Override

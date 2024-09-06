@@ -40,10 +40,13 @@ public class WifiInfoRepository {
         try {
             pstmt = conn.prepareStatement(sql);
             rs = pstmt.executeQuery();
-            return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return 0;
     }
 
     private JsonObject getWifiJsonObject() {
@@ -149,6 +152,45 @@ public class WifiInfoRepository {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public WifiInfo findById(String id) {
+        String sql = "SELECT * FROM PublicWifiInfo WHERE X_SWIFI_MGR_NO = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                WifiInfo wifiInfo = new WifiInfo();
+                wifiInfo.setId(rs.getString("X_SWIFI_MGR_NO"));
+                wifiInfo.setWrdofc(rs.getString("X_SWIFI_WRDOFC"));
+                wifiInfo.setNm(rs.getString("X_SWIFI_MAIN_NM"));
+                wifiInfo.setAddress1(rs.getString("X_SWIFI_ADRES1"));
+                wifiInfo.setAddress2(rs.getString("X_SWIFI_ADRES2"));
+                wifiInfo.setFloor(rs.getString("X_SWIFI_INSTL_FLOOR"));
+                wifiInfo.setTy(rs.getString("X_SWIFI_INSTL_TY"));
+                wifiInfo.setMby(rs.getString("X_SWIFI_INSTL_MBY"));
+                wifiInfo.setSe(rs.getString("X_SWIFI_SVC_SE"));
+                wifiInfo.setCmcwr(rs.getString("X_SWIFI_CMCWR"));
+                wifiInfo.setYear(rs.getString("X_SWIFI_CNSTC_YEAR"));
+                wifiInfo.setDoor(rs.getString("X_SWIFI_INOUT_DOOR"));
+                wifiInfo.setRemars3(rs.getString("X_SWIFI_REMARS3"));
+                wifiInfo.setLat(rs.getDouble("LAT"));
+                wifiInfo.setLnt(rs.getDouble("LNT"));
+                wifiInfo.setDttm(rs.getString("WORK_DTTM"));
+                wifiInfo.setDistance(0d);
+                return wifiInfo;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return new WifiInfo(); // 빈 객체 반환
+    }
+
+    public List<WifiInfo> loadMyHistory(Long id) {
+        String sql = "SELECT * From MEMBER WHERE id = ?";
+        return new ArrayList<>();
+
     }
 }
 

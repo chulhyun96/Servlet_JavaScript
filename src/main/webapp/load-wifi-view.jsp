@@ -9,9 +9,17 @@
 <html>
 <head>
     <title>와이파이 정보 구하기</title>
+    <style>
+        div {
+            padding-top: 40px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
+<div>
     <h1><%=request.getAttribute("result")%></h1>
-    <a href="index.jsp">홈으로 가기</a>
+    <h3><a href="index.jsp">홈으로 가기</a></h3>
+</div>
 </body>
 </html>
