@@ -33,10 +33,17 @@ public class WifiInfoRepository {
     }
 
     public int loadData() {
-        JsonObject wifiJson = getWifiJsonObject();
+        /*JsonObject wifiJson = getWifiJsonObject();
         JsonObject publicWifiInfoJson = wifiJson.get("TbPublicWifiInfo").getAsJsonObject();
-        /*saveToDatabase(publicWifiInfoJson);*/
-        return publicWifiInfoJson.get("list_total_count").getAsInt();
+        saveToDatabase(publicWifiInfoJson);*/
+        String sql = "SELECT count(*) FROM PublicWifiInfo";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private JsonObject getWifiJsonObject() {

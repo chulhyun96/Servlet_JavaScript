@@ -59,9 +59,14 @@
         </thead>
         <tbody>
         <tr>
-            <td colspan="17"><% request.getParameter("notService");%></td>
+            <% String message = (String) request.getAttribute("notService");%>
+            <td colspan="17"><%=message%></td>
         </tr>
         </tbody>
     </table>
 </div>
+<script>
+    alert("<%=message%>");
+</script>
 </body>
+</html>

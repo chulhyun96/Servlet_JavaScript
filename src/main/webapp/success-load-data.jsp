@@ -47,6 +47,7 @@
             <th>상세주소</th>
             <th>설치위치(층)</th>
             <th>설치유형</th>
+            <th>설치기관</th>
             <th>서비스구분</th>
             <th>망종류</th>
             <th>설치년도</th>
@@ -58,7 +59,6 @@
         </tr>
         </thead>
         <c:forEach var="wifi" items="${searchList}">
-
             <tr>
                 <td>${wifi.distance}</td>
                 <td>${wifi.id}</td>
@@ -73,6 +73,7 @@
                 <td>${wifi.cmcwr}</td>
                 <td>${wifi.year}</td>
                 <td>${wifi.door}</td>
+                <td>${wifi.remars3}</td>
                 <td>${wifi.lat}</td>
                 <td>${wifi.lnt}</td>
                 <td>${wifi.dttm}</td>
@@ -81,3 +82,5 @@
     </table>
 </div>
 </body>
+<script src="static/mylocation.js"></script>
+</html>

@@ -41,7 +41,7 @@
                 <th>망종류</th>
                 <th>설치년도</th>
                 <th>실내외구분</th>
-                <th>WIFI전속환경</th>
+                <th>WIFI접속환경</th>
                 <th>X좌표</th>
                 <th>Y좌표</th>
                 <th>작업일자</th>
@@ -54,26 +54,6 @@
             </tbody>
         </table>
     </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('locationButton').addEventListener('click', function (event) {
-            event.preventDefault();
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(successCallback);
-            } else {
-                alert("");
-            }
-        });
-
-        function successCallback(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-
-            // 위치 정보를 HTML 입력 필드에 설정
-            document.getElementById('lat').value = latitude;
-            document.getElementById('lnt').value = longitude;
-        }
-    });
-</script>
+<script src="static/mylocation.js"></script>
 </body>
 </html>

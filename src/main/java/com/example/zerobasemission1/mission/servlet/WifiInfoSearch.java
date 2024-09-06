@@ -24,10 +24,10 @@ public class WifiInfoSearch extends HttpServlet {
 
         request.setAttribute("lat",lat);
         request.setAttribute("lnt",lnt);
-        if (searchList.size() == 0) {
+        if (searchList.isEmpty()) {
             String notService = "서비스 가능한 지역이 아닙니다.";
             request.setAttribute("notService",notService);
-            request.getRequestDispatcher("not-service-wifi.jsp").forward(request, response);
+            request.getRequestDispatcher("fail-load-data.jsp").forward(request, response);
         }  else {
             request.setAttribute("searchList", searchList);
             request.getRequestDispatcher("success-load-data.jsp").forward(request, response);
