@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: cheolhyeon
-  Date: 2024. 9. 6.
-  Time: 17:26
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -18,7 +11,7 @@
 <h1>위치 히스토리 목록</h1>
 <div class="menu">
     <a href="index.jsp">홈</a> |
-    <a href="my-history">위치 히스토리 목록</a> |
+    <a href="history">위치 히스토리 목록</a> |
     <a href="load-wifi">Open API 와이파이 정보 가져오기</a> |
     <a href="#">즐겨 찾기 보기</a> |
     <a href="#">즐겨 찾기 그룹 관리</a>
@@ -34,13 +27,26 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="history" items="${myHistoryList}">
+        <c:forEach var="history" items="${historyList}">
         <tr>
-            <td>${history}</td>
+            <td>${history.id}</td>
+            <td>${history.lat}</td>
+            <td>${history.lnt}</td>
+            <td>${history.date}</td>
+            <c:if test="${history.status == true}">
+                <form action="delete-history" method="post">
+                    <input type="hidden" name="id" value="${history.id}">
+                    <button onclick="deleteButton()">삭제</button>
+                </form>
+            </c:if>
         </tr>
     </tbody>
     </c:forEach>
 </table>
-
 </body>
+<script>
+    function deleteButton() {
+        alert("정말로 삭제하시겠습니까?")
+    }
+</script>
 </html>

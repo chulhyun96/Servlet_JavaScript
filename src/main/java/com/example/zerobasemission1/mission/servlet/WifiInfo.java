@@ -21,31 +21,12 @@ public class WifiInfo {
     private Double lnt;
     private Double distance;
     private String dttm;
-    private DecimalFormat df = new DecimalFormat("#.####");
+    private final DecimalFormat df = new DecimalFormat("#.####");
 
 
     public WifiInfo() {
     }
 
-    public WifiInfo(String id, String wrdofc, String nm, String address1, String address2, String floor, String ty, String mby, String se, String cmcwr, String year, String door, String remars3, Double lat, Double lnt, Double distance, String dttm) {
-        this.id = id;
-        this.wrdofc = wrdofc;
-        this.nm = nm;
-        this.address1 = address1;
-        this.address2 = address2;
-        this.floor = floor;
-        this.ty = ty;
-        this.mby = mby;
-        this.se = se;
-        this.cmcwr = cmcwr;
-        this.year = year;
-        this.door = door;
-        this.remars3 = remars3;
-        this.lat = lat;
-        this.lnt = lnt;
-        this.distance = distance;
-        this.dttm = dttm;
-    }
     public boolean isEmpty() {
         return this.id.isEmpty();
     }

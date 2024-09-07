@@ -19,8 +19,6 @@ public class WIfiInfoDetail extends HttpServlet {
         System.out.println("mgrNo = " + mgrNo);
 
         Member member = Member.getInstance();
-        member.addHistory(findWifi);
-
 
         request.setAttribute("findWifi", findWifi);
         request.getRequestDispatcher("wifi-detail.jsp").forward(request, response);

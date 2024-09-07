@@ -10,6 +10,7 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -109,7 +110,7 @@ public class WifiInfoRepository {
         }
     }
 
-    public List<WifiInfo> getSearchList(double lat, double lnt) {
+    public List<WifiInfo> findSearchResult(double lat, double lnt) {
         String sql = "SELECT *, " +
                 "(6371 * ACOS(COS(RADIANS(?)) * COS(RADIANS(LAT)) * COS(RADIANS(LNT) - RADIANS(?)) + " +
                 "SIN(RADIANS(?)) * SIN(RADIANS(LAT)))) AS distance " +
@@ -187,10 +188,63 @@ public class WifiInfoRepository {
         return new WifiInfo(); // 빈 객체 반환
     }
 
-    public List<WifiInfo> loadMyHistory(Long id) {
-        String sql = "SELECT * From MEMBER WHERE id = ?";
-        return new ArrayList<>();
+    public int saveMyHistory( Long memberId, double lat, double lnt, boolean status) {
+        String sql = "INSERT INTO HISTORY (member_id,lat, lnt, date, status) VALUES (?,?, ?, ?, ?)";
 
+        LocalDateTime now = LocalDateTime.now();
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, memberId);
+            pstmt.setDouble(2, lat);
+            pstmt.setDouble(3, lnt);
+            pstmt.setTimestamp(4, Timestamp.valueOf(now));
+            pstmt.setBoolean(5,status);
+            int rowAffected = pstmt.executeUpdate();
+            if (rowAffected > 0) System.out.println("HISTORY 목록 추가 완료." + rowAffected);
+            return rowAffected;
+        } catch (SQLException e) {
+            System.out.println("데이터 삽입 중 오류 발생: " + e.getMessage());
+            return -1;
+        }
+    }
+
+    public List<History> findMyHistoryList(Long id) {
+        String sql = "SELECT id, lat, lnt, date, status FROM HISTORY WHERE member_id = ? and status = ?";
+        List<History> list = new ArrayList<>();
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, id);
+            pstmt.setBoolean(2, true);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                History history = new History();
+                history.setId(rs.getLong("id"));
+                history.setLat(rs.getDouble("lat"));
+                history.setLnt(rs.getDouble("lnt"));
+                history.setDate(rs.getTimestamp("date").toLocalDateTime());
+                history.setStatus(rs.getBoolean("status"));
+                list.add(history);
+            }
+            return list;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int updateWifiStatus(long wifiId) {
+        String sql = "UPDATE HISTORY SET status = ? WHERE id = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setBoolean(1, false);
+            pstmt.setLong(2, wifiId);
+            int rowAffected = pstmt.executeUpdate();
+            if (rowAffected > 0) System.out.println("HISTORY 상태 수정(삭제 버튼) 완료." + rowAffected);
+            return rowAffected;
+        } catch (SQLException e) {
+            System.out.println("수정 실패 : " + e.getMessage());
+            return -1;
+        }
     }
 }
 

@@ -16,10 +16,14 @@ public class WifiInfoSearch extends HttpServlet {
         //37.4811992, 126.8955428
         double lat = Double.parseDouble(request.getParameter("lat"));
         double lnt = Double.parseDouble(request.getParameter("lnt"));
-        List<WifiInfo> searchList = wifiInfoRepository.getSearchList(lat, lnt);
+        List<WifiInfo> searchList = wifiInfoRepository.findSearchResult(lat, lnt);
+
+        Long id = Member.getInstance().getId(); // findById
+        int resultOfHistory = wifiInfoRepository.saveMyHistory(id,lat, lnt,true);
 
         System.out.println("lat = " + lat);
         System.out.println("lnt = " + lnt);
+        System.out.println("resultOfHistory = " + resultOfHistory);
         System.out.println("searchList = " + searchList.size());
 
         request.setAttribute("lat",lat);
