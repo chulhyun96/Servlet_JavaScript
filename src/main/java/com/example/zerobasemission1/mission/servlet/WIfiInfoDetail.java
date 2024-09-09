@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/detail")
 public class WIfiInfoDetail extends HttpServlet {
@@ -19,7 +20,9 @@ public class WIfiInfoDetail extends HttpServlet {
         System.out.println("mgrNo = " + mgrNo);
 
         Member member = Member.getInstance();
-
+        List<Bookmark> bookMarkInfo = wifiInfoRepository.findBookMarkInfo(member.getId());
+        System.out.println("Bookmark INFO SIZE  = " + bookMarkInfo.size());
+        request.setAttribute("bookMarkInfo", bookMarkInfo);
         request.setAttribute("findWifi", findWifi);
         request.getRequestDispatcher("wifi-detail.jsp").forward(request, response);
     }

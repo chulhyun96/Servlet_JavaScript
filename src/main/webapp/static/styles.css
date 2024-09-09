@@ -24,6 +24,7 @@ h1 {
     color: #0b93dc;
     text-decoration: none;
     margin: 0 10px;
+    font-size: 16px;
 }
 
 .menu a:hover {
@@ -74,6 +75,6 @@ th {
 }
 
 tbody tr td[colspan] {
-    color: #888;
+    color: #18e741;
     font-style: italic;
 }
