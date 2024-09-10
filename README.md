@@ -28,4 +28,4 @@ ___
 ---
 
 ### 과제 시연 영상
-https://drive.google.com/drive/computers
+[시연 영상 보기]https://drive.google.com/file/d/1l0VUThwT_vBEW5W6FvV7Q5ALfLpsxlh1/view?usp=sharing
