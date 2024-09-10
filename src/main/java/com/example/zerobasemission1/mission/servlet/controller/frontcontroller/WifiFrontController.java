@@ -1,6 +1,7 @@
-package com.example.zerobasemission1.mission.servlet.controller.front;
+package com.example.zerobasemission1.mission.servlet.controller.frontcontroller;
 
 import com.example.zerobasemission1.mission.servlet.controller.*;
+import com.example.zerobasemission1.mission.servlet.controller.impl_controller.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,7 +27,7 @@ public class WifiFrontController extends HttpServlet {
         controllerMap.put("/app/favorite-add", new WifiFavoriteAddController());
         controllerMap.put("/app/bookmark-group", new WifiBookmarkListController());
         controllerMap.put("/app/bookmark-add", new WifiBookmarkAddFormController());
-        controllerMap.put("/app/bookmark-group-add-submit", new WifiBookmarkGroupAddController());
+        controllerMap.put("/app/bookmark-group-add-submit", new WifiBookmarkAddController());
         controllerMap.put("/app/delete-bookmark", new WifiBookmarkDeleteController());
         controllerMap.put("/app/update-bookmark", new WifiBookmarkUpdateController());
         controllerMap.put("/app/update-bookmark-form", new WifiBookmarkUpdateFormController());
@@ -39,7 +40,6 @@ public class WifiFrontController extends HttpServlet {
         System.out.println("requestURI = " + requestURI);
 
         Controller controller = controllerMap.get(requestURI);
-        System.out.println("controller = " + controller.getClass().getName());
         if (controller == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;

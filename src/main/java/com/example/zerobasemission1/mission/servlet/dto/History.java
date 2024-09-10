@@ -1,6 +1,5 @@
-package com.example.zerobasemission1.mission.servlet;
+package com.example.zerobasemission1.mission.servlet.dto;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class History {

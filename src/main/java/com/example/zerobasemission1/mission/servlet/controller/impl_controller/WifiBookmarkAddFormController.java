@@ -1,4 +1,6 @@
-package com.example.zerobasemission1.mission.servlet.controller;
+package com.example.zerobasemission1.mission.servlet.controller.impl_controller;
+
+import com.example.zerobasemission1.mission.servlet.controller.Controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

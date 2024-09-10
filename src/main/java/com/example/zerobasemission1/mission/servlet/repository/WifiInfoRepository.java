@@ -1,6 +1,10 @@
-package com.example.zerobasemission1.mission.servlet;
+package com.example.zerobasemission1.mission.servlet.repository;
 
 import com.example.zerobasemission1.mission.env_config.Config;
+import com.example.zerobasemission1.mission.servlet.dto.Bookmark;
+import com.example.zerobasemission1.mission.servlet.dto.Favorite;
+import com.example.zerobasemission1.mission.servlet.dto.History;
+import com.example.zerobasemission1.mission.servlet.dto.WifiInfo;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

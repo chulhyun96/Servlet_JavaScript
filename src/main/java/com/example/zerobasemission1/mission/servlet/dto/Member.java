@@ -1,7 +1,4 @@
-package com.example.zerobasemission1.mission.servlet;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.example.zerobasemission1.mission.servlet.dto;
 
 public class Member {
     private Long id;

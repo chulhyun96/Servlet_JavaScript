@@ -1,4 +1,4 @@
-<%@ page import="com.example.zerobasemission1.mission.servlet.WifiInfo" %>
+<%@ page import="com.example.zerobasemission1.mission.servlet.dto.WifiInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>

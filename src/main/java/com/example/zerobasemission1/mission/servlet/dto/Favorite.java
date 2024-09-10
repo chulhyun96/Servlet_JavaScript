@@ -1,4 +1,4 @@
-package com.example.zerobasemission1.mission.servlet;
+package com.example.zerobasemission1.mission.servlet.dto;
 
 import java.time.LocalDateTime;
 
