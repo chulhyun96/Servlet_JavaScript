@@ -1,4 +1,4 @@
-<%@ page import="com.example.zerobasemission1.mission.servlet.dto.Bookmark" %>
+<%@ page import="com.example.zerobasemission1.mission.servlet.entity.Bookmark" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--

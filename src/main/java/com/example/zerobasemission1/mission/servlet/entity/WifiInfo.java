@@ -1,4 +1,4 @@
-package com.example.zerobasemission1.mission.servlet.dto;
+package com.example.zerobasemission1.mission.servlet.entity;
 
 
 import java.text.DecimalFormat;

@@ -1,6 +1,6 @@
 package com.example.zerobasemission1.mission.servlet.controller.impl_controller;
 
-import com.example.zerobasemission1.mission.servlet.dto.Member;
+import com.example.zerobasemission1.mission.servlet.entity.Member;
 import com.example.zerobasemission1.mission.servlet.repository.WifiInfoRepository;
 import com.example.zerobasemission1.mission.servlet.controller.Controller;
 

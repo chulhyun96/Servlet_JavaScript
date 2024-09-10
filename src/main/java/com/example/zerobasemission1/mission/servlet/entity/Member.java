@@ -1,4 +1,4 @@
-package com.example.zerobasemission1.mission.servlet.dto;
+package com.example.zerobasemission1.mission.servlet.entity;
 
 public class Member {
     private Long id;

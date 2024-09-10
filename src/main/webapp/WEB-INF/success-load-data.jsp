@@ -1,4 +1,4 @@
-<%@ page import="com.example.zerobasemission1.mission.servlet.dto.Member" %><%--
+<%@ page import="com.example.zerobasemission1.mission.servlet.entity.Member" %><%--
   Created by IntelliJ IDEA.
   User: cheolhyeon
   Date: 2024. 9. 6.
