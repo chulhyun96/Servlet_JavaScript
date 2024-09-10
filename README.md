@@ -28,8 +28,8 @@ ___
 ---
 
 ### 과제 시연 영상
-[제로베이스-마스터미션.mov](../../../Desktop/%EC%A0%9C%EB%A1%9C%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%A7%88%EC%8A%A4%ED%84%B0%EB%AF%B8%EC%85%98.mov)
 
+[제로베이스-마스터미션.mov](../../../Desktop/%EC%A0%9C%EB%A1%9C%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EB%A7%88%EC%8A%A4%ED%84%B0%EB%AF%B8%EC%85%98.mov)
  
 
 
