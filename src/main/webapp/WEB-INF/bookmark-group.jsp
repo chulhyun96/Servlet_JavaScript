@@ -69,13 +69,13 @@
 <body>
 <div class="menu">
     <h1>북 마크 목록</h1>
-    <a href="index.jsp">홈</a> |
+    <a href="../index.jsp">홈</a> |
     <a href="history">위치 히스토리 목록</a> |
     <a href="load-wifi">Open API 와이파이 정보 가져오기</a> |
-    <a href="">즐겨 찾기 보기</a> |
+    <a href="my-favorite-list">즐겨 찾기 보기</a> |
     <a href="bookmark-group">즐겨 찾기 그룹 관리</a>
 </div>
-<a href="bookmark-add.jsp">
+<a href="bookmark-add">
     <button>북마크 그룹 이름 추가</button>
 </a>
 <table>
@@ -91,29 +91,32 @@
     </thead>
     <tbody>
     <% List<Bookmark> bookmarkList = (List<Bookmark>) request.getAttribute("bookmarkList");%>
+
     <c:if test="${not empty bookmarkList}">
         <c:forEach var="bookmark" items="${bookmarkList}">
             <tr>
-            <td>${bookmark.id}</td>
-            <td>${bookmark.name}</td>
-            <td>${bookmark.orders}</td>
-            <td>${bookmark.createdDate}</td>
-            <td>${bookmark.modifyDate}</td>
-            <td>
-                <c:if test="${bookmark.status}">
-                    <div class="button-div">
-                        <form action="delete-bookmark" method="post">
-                            <input type="hidden" name="bookmarkId" value="${bookmark.id}">
-                            <button onclick="return deleteButton()">삭제</button>
-                        </form>
-                        <button onclick="return updateButton(${bookmark.id})">수정</button>
-                    </div>
-                </c:if>
-            </td>
+                <td>${bookmark.id}</td>
+                <td>${bookmark.name}</td>
+                <td>${bookmark.orders}</td>
+                <td>${bookmark.createdDate}</td>
+                <td>${bookmark.modifyDate}</td>
+                <td>
+                    <c:if test="${bookmark.status}">
+                        <div class="button-div">
+                            <form action="delete-bookmark" method="post">
+                                <input type="hidden" name="bookmarkId" value="${bookmark.id}">
+                                <button onclick="return deleteButton()">삭제</button>
+                            </form>
+                            <form action="update-bookmark-form" method="get">
+                                <input type="hidden" name="bookmarkId" value="${bookmark.id}">
+                                <button onclick="return updateButton()">수정</button>
+                            </form>
+                        </div>
+                    </c:if>
+                </td>
+            </tr>
         </c:forEach>
-        </tr>
     </c:if>
-
     <c:if test="${empty bookmarkList}">
         <tr>
             <td colspan="17"><b>정보가 존재하지 않습니다.</b></td>
@@ -129,10 +132,8 @@
     }
 
 
-    function updateButton(id) {
-        if (confirm("정말로 수정하시겠습니까?")) {
-            location.href = "update-bookmark.jsp?bookmarkId=" + id;
-        }
+    function updateButton() {
+        return confirm("정말로 수정하시겠습니까?");
     }
 </script>
 </html>

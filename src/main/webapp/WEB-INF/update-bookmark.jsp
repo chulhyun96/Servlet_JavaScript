@@ -1,10 +1,9 @@
-<%@ page import="com.example.zerobasemission1.mission.servlet.Bookmark" %>
-<%@ page import="java.util.List" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
+    <meta charset="UTF-8">
     <title>북 마크 목록</title>
-    <%@ page contentType="text/html; charset=UTF-8" %>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,7 +43,6 @@
             font-size: 13px;
         }
 
-
         input[type="text"] {
             width: 100%;
             padding: 6px;
@@ -59,6 +57,7 @@
             border: none;
             cursor: pointer;
         }
+
         .center {
             text-align: center;
         }
@@ -71,13 +70,14 @@
 <body>
 <div class="menu">
     <h1>북 마크 목록</h1>
-    <a href="index.jsp">홈</a> |
+    <a href="../index.jsp">홈</a> |
     <a href="history">위치 히스토리 목록</a> |
     <a href="load-wifi">Open API 와이파이 정보 가져오기</a> |
-    <a href="">즐겨 찾기 보기</a> |
+    <a href="my-favorite-list">즐겨 찾기 보기</a> |
     <a href="bookmark-group">즐겨 찾기 그룹 관리</a>
 </div>
-<form action="bookmark-group-add-submit" method= "post">
+
+<form action="update-bookmark" method="post">
     <table>
         <tr>
             <th>북마크 이름</th>
@@ -91,15 +91,18 @@
                 <input type="text" name="orders" required>
             </label></td>
         </tr>
+        <input type="hidden" name="bookmarkId" value="${param.bookmarkId}">
     </table>
     <div class="center">
-        <button type="submit" onclick="addBookMark()">추가</button>
+        <button type="button" onclick="back()">돌아가기</button>
+        <button type="submit">수정</button>
     </div>
 </form>
-</body>
+
 <script>
-    function addBookMark() {
-        alert("북마크 그룹 정보를 추가하였습니다.")
+    function back() {
+        window.history.back();
     }
 </script>
+</body>
 </html>

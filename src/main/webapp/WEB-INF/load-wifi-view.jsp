@@ -19,7 +19,7 @@
 <body>
 <div>
     <h1><%=request.getAttribute("result")%></h1>
-    <h3><a href="index.jsp">홈으로 가기</a></h3>
+    <h3><a href="../index.jsp">홈으로 가기</a></h3>
 </div>
 </body>
 </html>

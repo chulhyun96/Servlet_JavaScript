@@ -1,10 +1,4 @@
-<%@ page import="com.example.zerobasemission1.mission.servlet.WifiInfo" %><%--
-  Created by IntelliJ IDEA.
-  User: cheolhyeon
-  Date: 2024. 9. 6.
-  Time: 16:52
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.zerobasemission1.mission.servlet.WifiInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -17,14 +11,17 @@
             font-family: Arial, sans-serif;
             font-size: 13px;
         }
+
         h1 {
             text-align: center;
             color: #333;
         }
+
         .menu {
             text-align: center;
             margin-bottom: 20px;
         }
+
         .menu a {
             color: #0b93dc;
             text-decoration: none;
@@ -56,6 +53,7 @@
             color: #18e741;
             font-style: italic;
         }
+
         .info {
             background-color: #f2f2f2;
         }
@@ -65,25 +63,26 @@
 <body>
 <h1>와이파이 정보 구하기</h1>
 <div class="menu">
-    <a href="index.jsp">홈</a> |
+    <a href="../index.jsp">홈</a> |
     <a href="history">위치 히스토리 목록</a> |
     <a href="load-wifi">Open API 와이파이 정보 가져오기</a> |
-    <a href="">즐겨 찾기 보기</a> |
+    <a href="my-favorite-list">즐겨 찾기 보기</a> |
     <a href="bookmark-group">즐겨 찾기 그룹 관리</a>
 </div>
 <hr>
-<form action="favorite-add" method="post">
+<%
+    WifiInfo wifi = (WifiInfo) request.getAttribute("findWifi");  // 객체 받아오기
+%>
+<form action="favorite-add?wifiId=<%=wifi.getId()%>" method="post" onsubmit="return favorite()">
     <select name="group" id="group">
-        <option value="">북마크 그룹 이름 선택</option>
+        <option selected disabled value=" ">북마크 그룹 이름 선택</option>
         <c:forEach var="bookmark" items="${bookMarkInfo}">
             <option value="${bookmark.id}">${bookmark.name}</option>
         </c:forEach>
     </select>
-    <button type="submit" onclick="favorite()">즐겨찾기 추가하기</button>
+    <button>즐겨찾기 추가하기</button>
 </form>
-<%
-    WifiInfo wifi = (WifiInfo) request.getAttribute("findWifi");  // 객체 받아오기
-%>
+
 
 <table>
     <tr>
@@ -158,7 +157,13 @@
 </body>
 <script>
     function favorite() {
-        alert("북마크 정보를 추가하였습니다.")
+        var group = document.getElementById('group').value;
+        if (group == ' ') {
+            alert("북마크 그룹을 선택해주세요.");
+            return false;
+        }
+        return confirm("북마크 그룹을 추가하시겠습니까?");
     }
+
 </script>
 </html>

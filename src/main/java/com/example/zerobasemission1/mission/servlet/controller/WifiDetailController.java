@@ -1,19 +1,20 @@
-package com.example.zerobasemission1.mission.servlet;
+package com.example.zerobasemission1.mission.servlet.controller;
+
+import com.example.zerobasemission1.mission.servlet.Bookmark;
+import com.example.zerobasemission1.mission.servlet.Member;
+import com.example.zerobasemission1.mission.servlet.WifiInfo;
+import com.example.zerobasemission1.mission.servlet.WifiInfoRepository;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/detail")
-public class WIfiInfoDetail extends HttpServlet {
-    private final WifiInfoRepository wifiInfoRepository = new WifiInfoRepository();
-
+public class WifiDetailController implements Controller {
+    private final WifiInfoRepository wifiInfoRepository = WifiInfoRepository.getInstance();
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String mgrNo = request.getParameter("mgrNo");
         WifiInfo findWifi = wifiInfoRepository.findById(mgrNo);
         System.out.println("조회 완료 ID = " + findWifi.getId());
@@ -22,8 +23,11 @@ public class WIfiInfoDetail extends HttpServlet {
         Member member = Member.getInstance();
         List<Bookmark> bookMarkInfo = wifiInfoRepository.findBookMarkInfo(member.getId());
         System.out.println("Bookmark INFO SIZE  = " + bookMarkInfo.size());
+
         request.setAttribute("bookMarkInfo", bookMarkInfo);
         request.setAttribute("findWifi", findWifi);
-        request.getRequestDispatcher("wifi-detail.jsp").forward(request, response);
+
+        String viewPath = "/WEB-INF/detail.jsp";
+        request.getRequestDispatcher(viewPath).forward(request, response);
     }
 }

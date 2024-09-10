@@ -13,16 +13,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>와이파이 정보 구하기</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
 <div class="container">
     <h1>와이파이 정보 구하기</h1>
     <div class="menu">
-        <a href="index.jsp">홈</a> |
+        <a href="../index.jsp">홈</a> |
         <a href="history">위치 히스토리 목록</a> |
         <a href="load-wifi">Open API 와이파이 정보 가져오기</a> |
-        <a href="">즐겨 찾기 보기</a> |
+        <a href="my-favorite-list">즐겨 찾기 보기</a> |
         <a href="bookmark-group">즐겨 찾기 그룹 관리</a>
     </div>
     <div class="location-inputs">
@@ -88,5 +88,5 @@
     </table>
 </div>
 </body>
-<script src="static/mylocation.js"></script>
+<script src="../static/mylocation.js"></script>
 </html>

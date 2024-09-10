@@ -1,28 +1,21 @@
-package com.example.zerobasemission1.mission.servlet;
+package com.example.zerobasemission1.mission.servlet.controller;
+
+import com.example.zerobasemission1.mission.servlet.WifiInfoRepository;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-@WebServlet("/update-bookmark")
-public class WifiUpdateBookmark extends HttpServlet {
-    private static final WifiInfoRepository wifiInfoRepository = new WifiInfoRepository();
-
+public class WifiBookmarkUpdateController implements Controller{
+    private final WifiInfoRepository wifiInfoRepository = WifiInfoRepository.getInstance();
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String bookmarkName = request.getParameter("bookmarkName");
         String orders = request.getParameter("orders");
         String bookmarkId = request.getParameter("bookmarkId");
-
-
-        System.out.println("bookmarkId = " + bookmarkId);
-        System.out.println("bookmarkName = " + bookmarkName);
-        System.out.println("orders = " + orders);
 
         int row = wifiInfoRepository.updateWifiInfo(Long.parseLong(bookmarkId), bookmarkName, Long.parseLong(orders), LocalDateTime.now());
         System.out.println("update =  " + row);

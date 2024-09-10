@@ -16,12 +16,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class WifiInfoRepository {
+    private static WifiInfoRepository instance;
     private Connection conn;
     private PreparedStatement pstmt;
     private ResultSet rs;
-    final String BASE_URL = "http://openapi.seoul.go.kr:8088/";
 
-    public WifiInfoRepository() {
+    private WifiInfoRepository() {
         try {
             String dbUrl = Config.DB_URL;
             String dbId = Config.DB_USER;
@@ -31,6 +31,13 @@ public class WifiInfoRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static WifiInfoRepository getInstance() {
+        if (instance == null) {
+            return new WifiInfoRepository();
+        }
+        return instance;
     }
 
     public int loadData() {
@@ -57,6 +64,7 @@ public class WifiInfoRepository {
                 .readTimeout(30,TimeUnit.SECONDS)
                 .build();
 
+        String BASE_URL = "http://openapi.seoul.go.kr:8088/";
         String urlBuilder = BASE_URL + Config.API_KEY + "/json/TbPublicWifiInfo/" + 25859 + "/" + 26567;
         Request request = new Request.Builder().url(urlBuilder).build();
 
@@ -188,7 +196,7 @@ public class WifiInfoRepository {
         return new WifiInfo(); // 빈 객체 반환
     }
 
-    public int saveMyHistory( Long memberId, double lat, double lnt, boolean status) {
+    public boolean saveMyHistory( Long memberId, double lat, double lnt, boolean status) {
         String sql = "INSERT INTO HISTORY (member_id,lat, lnt, date, status) VALUES (?,?, ?, ?, ?)";
 
         LocalDateTime now = LocalDateTime.now();
@@ -201,15 +209,15 @@ public class WifiInfoRepository {
             pstmt.setBoolean(5,status);
             int rowAffected = pstmt.executeUpdate();
             if (rowAffected > 0) System.out.println("HISTORY 목록 추가 완료." + rowAffected);
-            return rowAffected;
+            return true;
         } catch (SQLException e) {
             System.out.println("데이터 삽입 중 오류 발생: " + e.getMessage());
-            return -1;
+            return false;
         }
     }
 
     public List<History> findMyHistoryList(Long memberId) {
-        String sql = "SELECT id, lat, lnt, date, status FROM HISTORY WHERE member_id = ? and status = ?";
+        String sql = "SELECT id, lat, lnt, date, status FROM HISTORY  WHERE member_id = ? and status = ? order by HISTORY.id DESC";
         List<History> list = new ArrayList<>();
         try {
             pstmt = conn.prepareStatement(sql);
@@ -261,15 +269,16 @@ public class WifiInfoRepository {
                 bookMark.setName(rs.getString("name"));
                 bookMark.setOrders(rs.getLong("orders"));
                 bookMark.setCreatedDate(rs.getTimestamp("create_date").toLocalDateTime());
-                bookMark.setStatus(rs.getBoolean("status"));
-                list.add(bookMark);
                 Timestamp modifyDate = rs.getTimestamp("modify_date");
                 if (modifyDate != null) {
                     bookMark.setModifyDate(modifyDate.toLocalDateTime());
                 } else {
-                    return list;
+                    bookMark.setModifyDate(null);
                 }
+                bookMark.setStatus(rs.getBoolean("status"));
+                list.add(bookMark);
             }
+
             return list;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -303,7 +312,7 @@ public class WifiInfoRepository {
         }
     }
 
-    public int updateWifiInfo(long bookmarkId, String bookmarkName, Long orders, LocalDateTime modifiedDate) {
+    public int updateWifiInfo(Long bookmarkId, String bookmarkName, Long orders, LocalDateTime modifiedDate) {
         String sql = "UPDATE BOOK_MARK SET name = ?, orders = ?, modify_date = ? WHERE id = ?";
         try {
             pstmt = conn.prepareStatement(sql);
@@ -336,20 +345,62 @@ public class WifiInfoRepository {
         }
     }
 
-    public void saveFavoriteList(long bookmarkId, Long memberId) {
-        String sql = "INSERT INTO FAVORITE (bookmark_id, member_id) VALUES (?, ?)";
+    public void saveFavoriteList(long bookmarkId, Long memberId, String wifiId) {
+        String sql = "INSERT INTO FAVORITE (bookmark_id, member_id, created_date, status, wifi_id) VALUES (?, ?, now(), true, ?)";
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, bookmarkId);
             pstmt.setLong(2, memberId);
+            pstmt.setString(3, wifiId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void findMyFavoriteList(Long id) {
-        String sql = "Select id, name, wifi_name from BOOK_MARK where member_id = ?"; // join 쿼리
+    public List<Favorite> findMyFavoriteList(Long memberId) {
+        String sql = "SELECT " +
+                "f.id, " +
+                "bm.name AS b_name, " +
+                "pwi.X_SWIFI_MAIN_NM AS wifi_name, " +
+                "f.created_date, " +
+                "f.status " +
+                "FROM FAVORITE f " +
+                "JOIN BOOK_MARK bm ON f.bookmark_id = bm.id " +
+                "JOIN PublicWifiInfo pwi ON f.wifi_id = pwi.X_SWIFI_MGR_NO " +
+                "WHERE f.member_id = ? and f.status = true";
+        List<Favorite> list = new ArrayList<>();
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, memberId);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Favorite favorite = new Favorite();
+                favorite.setId(rs.getLong("id"));
+                favorite.setBookmarkName(rs.getString("b_name"));
+                favorite.setWifiName(rs.getString("wifi_name"));
+                favorite.setCreateDate(rs.getTimestamp("created_date").toLocalDateTime());
+                favorite.setStatus(rs.getBoolean("status"));
+                list.add(favorite);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void updateFavoriteStatus(Long favoriteId) {
+        String sql = "update FAVORITE set status = false where id = ?";
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, favoriteId);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

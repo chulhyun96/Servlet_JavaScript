@@ -13,6 +13,18 @@ public class Bookmark {
     public Bookmark() {
     }
 
+    @Override
+    public String toString() {
+        return "Bookmark{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", orders=" + orders +
+                ", createdDate=" + createdDate +
+                ", modifyDate=" + modifyDate +
+                ", status=" + status +
+                '}';
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

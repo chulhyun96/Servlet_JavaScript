@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>위치 히스토리 목록</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="../static/styles.css">
 </head>
 <body>
 <h1>위치 히스토리 목록</h1>
 <div class="menu">
-    <a href="index.jsp">홈</a> |
+    <a href="../index.jsp">홈</a> |
     <a href="history">위치 히스토리 목록</a> |
     <a href="load-wifi">Open API 와이파이 정보 가져오기</a> |
-    <a href="bookmark-group">즐겨 찾기 보기</a> |
+    <a href="my-favorite-list">즐겨 찾기 보기</a> |
     <a href="bookmark-group">즐겨 찾기 그룹 관리</a>
 </div>
 <table>
@@ -27,7 +27,7 @@
     </tr>
     </thead>
     <tbody>
-        <c:forEach var="history" items="${historyList}">
+    <c:forEach var="history" items="${historyList}">
         <tr>
             <td>${history.id}</td>
             <td>${history.lat}</td>
