@@ -34,12 +34,14 @@ ___
 ---
 
 ### Gradle 외부 라이브러리 의존성
+```groovy
 implementation 'javax.servlet:javax.servlet-api:4.0.1' -> HTTP 요청과 응답을 처리하는 Servlet 구현
 implementation 'com.squareup.okhttp3:okhttp:4.11.0' -> 외부 API와의 통신이나 서버 간의 HTTP 요청을 보내고 응답 받는 작업
 implementation 'com.google.code.gson:gson:2.10.1' -> API 요청 또는 응답에서 JSON 형식의 데이터를 주고받고 JSON 객체를 다루기 위해
 implementation 'io.github.cdimascio:dotenv-java:2.2.0' -> .env 파일에서 환경변수를 로드하고 민감한 파일 정보를 숨기기 위해
 implementation 'org.mariadb.jdbc:mariadb-java-client:3.0.7' -> MariaDB와 자바연결
 implementation group: 'javax.servlet', name: 'jstl', version: '1.2' -> JSP페이지에서 반복문과 조건문을 태그 형태로 쉽게 처리하기 위해
+```
 
 
 ### - 과제 시연 영상
